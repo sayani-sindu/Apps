@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, Roboto, sans-serif; margin:0; padding:16px; background:#0f0f12; color:#fff; }
+    h1 { font-size:22px; margin:4px 0 2px; }
+    .muted { color:#9aa; font-size:13px; margin:0 0 16px; }
+    .banner { background:#4C1D95; padding:16px; border-radius:12px; margin-bottom:16px; font-weight:600; }
+    .widgetSlot { min-height:64px; border:1px dashed #555; border-radius:12px; margin-bottom:16px;
+                  display:flex; align-items:center; justify-content:center; color:#888; font-size:13px; }
+    .card { display:flex; align-items:center; gap:12px; background:#1b1b21; border:1px solid #2a2a31;
+            border-radius:12px; padding:12px; margin-bottom:10px; }
+    .emoji { font-size:28px; }
+    .name { font-weight:700; flex:1; }
+    .price { color:#bbb; }
+    .btn { display:block; width:100%; background:#7c3aed; color:#fff; border:0; padding:14px;
+           border-radius:12px; font-size:16px; font-weight:700; margin-top:16px; }
+    .row { display:flex; gap:10px; margin-top:10px; }
+    .row .btn { margin-top:0; }
+    .secondary { background:#26262e; }
+  </style>
+</head>
+<body>
+  <h1 id="shopTitle">Shop</h1>
+  <p class="muted" id="shopSubtitle">A tiny store to play with</p>
+
+  <div class="banner" id="promoBanner">✨ Free shipping on orders over $150</div>
+
+  <!-- Widget slot: a clearly-marked placeholder you can target/replace -->
+  <div id="banner3" data-plotline-widget="true"></div>
+
+  <div class="card" id="card_1">
+    <span class="emoji">🎧</span>
+    <span class="name" id="name_1">Headphones</span>
+    <span class="price" id="price_1">$120</span>
+  </div>
+  <div class="card" id="card_2">
+    <span class="emoji">⌚</span>
+    <span class="name" id="name_2">Smart Watch</span>
+    <span class="price" id="price_2">$199</span>
+  </div>
+  <div class="card" id="card_3" >
+    <span class="emoji">🎒</span>
+    <span class="name" id="name_3">Backpack</span>
+    <span class="price" id="price_3">$89</span>
+  </div>
+
+  <div id="widgetSlot2" data-plotline-widget="true"></div>
+
+  <!-- Dashboard widget: STORIES widget targets clientElementId "bannerwcta" -->
+  <div id="bannerwcta" data-plotline-widget="true"></div>
+
+  <div class="row">
+  <button class="btn secondary" id="wishlistBtn" onclick="onWishlist()">Wishlist</button>
+  <button class="btn" id="checkoutBtn" onclick="onCheckout()">Checkout</button>
+</div>
+
+  <script>
+    (function () {
+      var SDK_URL = 'https://sdk.plotline.so/plotline-engage@latest/sdk.min.js';
+      var MAX_ATTEMPTS = 3;
+
+      console.log('[Plotline] HTML loaded');
+      console.log('[Plotline] location:', window.location.href, '| origin:', window.location.origin, '| pathname:', window.location.pathname);
+
+      try {
+        window.localStorage.setItem('__pl_test', '1');
+        window.localStorage.removeItem('__pl_test');
+        console.log('[Plotline] localStorage OK');
+      } catch (e) {
+        console.error('[Plotline] localStorage FAILED:', e);
+      }
+      try {
+        var __idbReq = window.indexedDB.open('__pl_test');
+        __idbReq.onsuccess = function () { console.log('[Plotline] IndexedDB OK'); };
+        __idbReq.onerror = function () { console.error('[Plotline] IndexedDB FAILED:', __idbReq.error); };
+      } catch (e) {
+        console.error('[Plotline] IndexedDB FAILED:', e);
+      }
+
+      // ---- guard: never inject the SDK twice in the same document ----
+      if (window.plotline && window._plotQueue) {
+        console.warn('[Plotline] Loader already present, skipping re-injection.');
+        return;
+      }
+
+      // ---- preserve the existing queue: plotline() queues until the SDK is ready ----
+      window._plotQueue = window._plotQueue || [];
+
+      function logCall(args) {
+        var name = args[0];
+        if (name === 'init') {
+          console.log('[Plotline] Plotline initialized: init called, key=' + (args[2] || ''));
+        } else if (name === 'identify') {
+          console.log('[Plotline] identify called');
+        } else if (name === 'track') {
+          console.log('[Plotline] event tracked: ' + (args[1] || '') + ' props=' + JSON.stringify(args[2] || {}));
+        } else {
+          console.log('[Plotline] call forwarded: ' + name);
+        }
+      }
+
+      window.plotline = function () {
+        var args = Array.prototype.slice.call(arguments);
+        logCall(args);
+        window._plotQueue.push(args);
+      };
+
+      // ---- drain whatever is still queued once the SDK is actually ready ----
+      function flushQueue() {
+        var q = window._plotQueue;
+        while (q.length > 0) {
+          var item = q.shift();
+          if (window.PlotlineWeb && typeof window.PlotlineWeb.processArgs === 'function') {
+            try {
+              window.PlotlineWeb.processArgs(item);
+              console.log('[Plotline] flushed queued call: ' + item[0]);
+            } catch (e) {
+              console.error('[Plotline] error processing queued call', item, e);
+            }
+          } else {
+            q.unshift(item);
+            break;
+          }
+        }
+      }
+
+      function onLoaded(attempt) {
+        console.log('[Plotline] SDK loaded successfully' + (attempt > 1 ? ' (attempt ' + attempt + ')' : ''));
+        if (window.PlotlineWeb && typeof window.PlotlineWeb.processArgs === 'function') {
+          // From now on route every plotline() call straight to the SDK.
+          window.plotline = function () {
+            var args = Array.prototype.slice.call(arguments);
+            logCall(args);
+            try {
+              return window.PlotlineWeb.processArgs(args);
+            } catch (e) {
+              console.error('[Plotline] error in call ' + args[0], e);
+            }
+          };
+          flushQueue();
+        } else {
+          console.error('[Plotline] SDK loaded but PlotlineWeb global was not found.');
+        }
+      }
+
+      function onFailed(attempt) {
+        console.error('[Plotline] SDK failed to load: ' + SDK_URL + ' (attempt ' + attempt + '/' + MAX_ATTEMPTS + ')');
+        if (attempt < MAX_ATTEMPTS) {
+          var waitMs = 1500 * attempt;
+          console.log('[Plotline] retrying in ' + waitMs + 'ms...');
+          setTimeout(function () { inject(attempt + 1); }, waitMs);
+        } else {
+          console.error('[Plotline] giving up after ' + MAX_ATTEMPTS + ' attempts. Queued calls will NOT be processed.');
+        }
+      }
+
+      function inject(attempt) {
+        attempt = attempt || 1;
+        console.log('[Plotline] SDK loading started (attempt ' + attempt + '): ' + SDK_URL);
+
+        // Remove any previous (failed) tag so we never end up with duplicates.
+        var old = document.getElementById('plotline-sdk');
+        if (old) {
+          old.onload = null;
+          old.onerror = null;
+          old.parentNode.removeChild(old);
+        }
+
+        var a = document.createElement('script');
+        a.id = 'plotline-sdk';
+        a.async = true;
+        a.src = SDK_URL;
+        a.onload = function () { onLoaded(attempt); };
+        a.onerror = function () { onFailed(attempt); };
+
+        var b = document.getElementsByTagName('script')[0];
+        b.parentNode.insertBefore(a, b);
+      }
+
+      inject(1);
+    })();
+
+    plotline('init', '__PLOTLINE_API_KEY__', 'sindu_test');
+    plotline('debug', true);
+
+    // identify attributes (call once you know the user)
+    plotline('identify', {
+        name: 'Sindu',
+        email: 'sindu@example.com',
+        subscription: 'paid',
+        loyaltyTier: 'gold',
+        totalOrders: '12',
+        isPremium: 'true'
+    });
+
+    // ---- button handlers ----
+    function onWishlist() {
+        plotline('track', 'wishlist_added', { screen: 'web_shop', source: 'button' });  // event WITH props
+        send('wishlist');                                                                // RN bridge
+    }
+
+    function onCheckout() {
+        plotline('track', 'checkout_started', { orderTotal: 499, currency: 'USD' });     // event WITH props
+        send('checkout');
+    }
+
+    // plain event example, no props:
+    plotline('track', 'shop_viewed');
+    // Web -> RN: tell the app what was tapped
+    function send(action) {
+      var msg = { type: 'WEB_ACTION', action: action, ts: Date.now() };
+      if (window.ReactNativeWebView) {
+        window.ReactNativeWebView.postMessage(JSON.stringify(msg));
+      }
+    }
+    // RN -> Web: e.g. inject content into a widget slot
+    window.onNativeMessage = function (data) {
+      if (data && data.slot && document.getElementById(data.slot)) {
+        document.getElementById(data.slot).textContent = data.text || '';
+      }
+    };
+
+    // Debug: report when the Plotline SDK renders a widget into a slot.
+    var __slot = document.getElementById('bannerwcta');
+    if (__slot && window.MutationObserver) {
+      var __obs = new MutationObserver(function () {
+        if (__slot.querySelector('[id^="plotline-widget-"]')) {
+          console.log('[Plotline] widget rendered into #bannerwcta');
+          __obs.disconnect();
+        }
+      });
+      __obs.observe(__slot, { childList: true, subtree: true });
+    }
+  </script>
+</body>
+</html>

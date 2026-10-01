@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        (function(pl,ot,line) {
+          if (window.plotline) return;
+          window._plotQueue = window._plotQueue || [];
+          window.plotline = function() { window._plotQueue.push(arguments) };
+          var a = document.createElement('script');
+          a.async = 1;
+          a.src = 'https://sdk.plotline.so/plotline-engage@latest/sdk.min.js';
+          var b = document.getElementsByTagName('script')[0];
+          b.parentNode.insertBefore(a, b);
+        })()
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Detail</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          background: #f5f7fa; color: #1a1f2e; padding: 16px;
+        }
+        .top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .back-btn {
+          width: 40px; height: 40px; border-radius: 12px;
+          background: #fff; border: none; font-size: 18px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .top-bar h1 { font-size: 20px; font-weight: 700; }
+
+        .hero {
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: #fff; padding: 20px; border-radius: 16px; margin-bottom: 20px;
+        }
+        .hero .tag {
+          display: inline-block; background: rgba(255,255,255,0.2);
+          padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 600;
+          margin-bottom: 10px;
+        }
+        .hero h2 { font-size: 22px; margin-bottom: 6px; }
+        .hero p { opacity: 0.9; font-size: 14px; }
+
+        .progress-row {
+          display: flex; justify-content: space-between; align-items: center;
+          background: #fff; padding: 16px; border-radius: 12px; margin-bottom: 20px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .progress-label { font-size: 13px; color: #6b7280; }
+        .progress-value { font-size: 20px; font-weight: 700; color: #4f46e5; }
+
+        .section-title {
+          font-size: 12px; font-weight: 600; color: #6b7280;
+          text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+        }
+        .lesson {
+          background: #fff; border-radius: 12px; padding: 14px;
+          margin-bottom: 10px; display: flex; align-items: center; gap: 12px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .lesson-num {
+          width: 32px; height: 32px; border-radius: 50%;
+          background: #eef2ff; color: #4f46e5;
+          display: flex; align-items: center; justify-content: center;
+          font-weight: 700; font-size: 13px;
+        }
+        .lesson.done .lesson-num { background: #10b981; color: #fff; }
+        .lesson-title { flex: 1; font-size: 14px; font-weight: 500; }
+        .lesson-duration { font-size: 12px; color: #6b7280; }
+
+        .action-row { display: flex; gap: 10px; margin-top: 20px; }
+        .btn {
+          flex: 1; padding: 14px; border-radius: 12px;
+          border: none; font-size: 15px; font-weight: 600;
+        }
+        .btn-primary { background: #4f46e5; color: #fff; }
+        .btn-secondary { background: #fff; color: #4f46e5; border: 1px solid #e1e5eb; }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <button class="back-btn" id="btn_back" onclick="goBack()">←</button>
+    <h1 id="page_title_course">Course Detail</h1>
+</div>
+
+<div class="hero" id="course_hero">
+    <span class="tag">Mathematics</span>
+    <h2 id="course_title">Algebra Fundamentals</h2>
+    <p id="course_instructor">Instructor: Ms. Anjali Rao</p>
+</div>
+
+<div class="progress-row" id="progress_row">
+    <div>
+        <div class="progress-label">Your progress</div>
+        <div class="progress-value">45%</div>
+    </div>
+    <div>
+        <div class="progress-label">Streak</div>
+        <div class="progress-value">7 days</div>
+    </div>
+</div>
+
+<!-- Web SDK widget placeholder -->
+<div id="web_course_banner" data-plotline-widget="true"></div>
+
+<div class="section-title">Lessons</div>
+
+<div class="lesson done" id="lesson_1" onclick="openLesson(1, 'Intro to Variables')">
+    <div class="lesson-num">✓</div>
+    <div class="lesson-title">Intro to Variables</div>
+    <div class="lesson-duration">12 min</div>
+</div>
+
+<div class="lesson done" id="lesson_2" onclick="openLesson(2, 'Solving Linear Equations')">
+    <div class="lesson-num">✓</div>
+    <div class="lesson-title">Solving Linear Equations</div>
+    <div class="lesson-duration">18 min</div>
+</div>
+
+<div class="lesson" id="lesson_3" onclick="openLesson(3, 'Quadratic Equations')">
+    <div class="lesson-num">3</div>
+    <div class="lesson-title">Quadratic Equations</div>
+    <div class="lesson-duration">22 min</div>
+</div>
+
+<div class="lesson" id="lesson_4" onclick="openLesson(4, 'Word Problems Practice')">
+    <div class="lesson-num">4</div>
+    <div class="lesson-title">Word Problems Practice</div>
+    <div class="lesson-duration">30 min</div>
+</div>
+
+<div class="action-row">
+    <button class="btn btn-secondary" id="btn_bookmark" onclick="bookmark()">Save</button>
+    <button class="btn btn-primary" id="btn_continue_course" onclick="continueCourse()">Continue Learning</button>
+</div>
+
+<!--<script>-->
+<!--    /* -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Wait for Web SDK to load, then init + identify -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
+<!--    function whenPlotlineReady(cb, attempts) {-->
+<!--        attempts = attempts || 0;-->
+<!--        var isReal = window.plotline && window.plotline.toString().length > 200;-->
+<!--        if (isReal) { cb(); return; }-->
+<!--        if (attempts > 50) {-->
+<!--            console.error("[Plotline] SDK failed to load after 5 seconds");-->
+<!--            return;-->
+<!--        }-->
+<!--        setTimeout(function() { whenPlotlineReady(cb, attempts + 1); }, 100);-->
+<!--    }-->
+
+<!--    whenPlotlineReady(function() {-->
+<!--        console.log("[Plotline] SDK ready, initializing");-->
+<!--        plotline('init', '__PLOTLINE_API_KEY__', 'sindu_test_2');-->
+<!--        plotline('identify', { source: 'webview', page: 'course', platform: 'android' });-->
+<!--        console.log("[Plotline] init complete");-->
+
+<!--        // Fire the initial page-view event once init has finished-->
+<!--        var params = new URLSearchParams(window.location.search);-->
+<!--        var studentId = params.get("student") || "unknown";-->
+<!--        plotline('track', 'course_screen_viewed', {-->
+<!--            course_id: "MATH101",-->
+<!--            course_name: "Algebra Fundamentals",-->
+<!--            student_id: studentId-->
+<!--        });-->
+<!--    });-->
+
+<!--    /* -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Helpers (route all events through Web SDK) -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
+<!--    function trackEventOnPlotline(eventName, properties) {-->
+<!--        properties = properties || {};-->
+<!--        if (window.plotline) {-->
+<!--            plotline('track', eventName, properties);-->
+<!--        } else {-->
+<!--            console.log("[Plotline not ready] track", eventName, properties);-->
+<!--        }-->
+<!--    }-->
+
+<!--    function identifyUserOnPlotline(attributes) {-->
+<!--        if (window.plotline) {-->
+<!--            plotline('identify', attributes);-->
+<!--        }-->
+<!--    }-->
+
+<!--    /* -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Page interactions -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
+<!--    function openLesson(lessonNum, title) {-->
+<!--        trackEventOnPlotline("lesson_opened", {-->
+<!--            lesson_num: lessonNum,-->
+<!--            lesson_title: title,-->
+<!--            course_id: "MATH101"-->
+<!--        });-->
+<!--    }-->
+
+<!--    function continueCourse() {-->
+<!--        trackEventOnPlotline("continue_course_clicked", { course_id: "MATH101" });-->
+<!--    }-->
+
+<!--    function bookmark() {-->
+<!--        trackEventOnPlotline("course_bookmarked", { course_id: "MATH101" });-->
+<!--    }-->
+
+<!--    function goBack() {-->
+<!--        trackEventOnPlotline("course_back_clicked", { course_id: "MATH101" });-->
+<!--        window.history.back();-->
+<!--    }-->
+
+<!--    /* -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Optional: check if a Plotline overlay is visible -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
+<!--    function isSafeToScroll() {-->
+<!--        if (!("Plotline" in window) || !window.Plotline.isPlotlineVisible()) {-->
+<!--            return true;-->
+<!--        }-->
+<!--        return false;-->
+<!--    }-->
+
+<!--    /* -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; Native -> WebView listener -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; */-->
+<!--    window.onPlotlineEvent = function(eventName, payloadJson) {-->
+<!--        var payload = payloadJson ? JSON.parse(payloadJson) : {};-->
+<!--        console.log("Native -> WebView:", eventName, payload);-->
+<!--        if (eventName === "course_purchased") location.reload();-->
+<!--    };-->
+<!--</script>-->
+<script>
+    window.plotline(
+        'init',
+'__PLOTLINE_API_KEY__',
+        'sindu_test_2'
+    );
+
+    window.plotline('identify', {
+        source: 'webview',
+        page: 'course'
+    });
+
+    window.plotline('track', 'course_screen_viewed', {
+        course_id: 'MATH101'
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+  (function(pl,ot,line) {
+    if (window.plotline) return;
+    window._plotQueue = window._plotQueue || [];
+    window.plotline = function() {window._plotQueue.push(arguments)}
+    var a = document.createElement('script');
+    a.async = 1;  
+    a.src = 'https://sdk.plotline.so/plotline-engage@latest/sdk.min.js';
+    var b = document.getElementsByTagName('script')[0];
+    b.parentNode.insertBefore(a, b);
+  })()
+</script>
+  <title>Sample Local Page</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, Roboto, Arial, sans-serif;
+      background: #f4f4fb;
+      color: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      margin-top: 24px;
+    }
+    h1 { color: #3f51b5; margin-top: 0; }
+    button {
+      background: #3f51b5;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    #count { font-weight: bold; color: #3f51b5; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hello from local HTML 👋</h1>
+    <p>This page is bundled inside the Flutter app as an asset. No internet needed.</p>
+
+    <!-- Plotline widget placeholders -->
+    <div data-plotline-widget="true" id="web1"></div>
+    <div data-plotline-widget="true" id="web2"></div>
+
+    <p>You clicked <span id="count">0</span> times.</p>
+    <button onclick="inc()">Click me</button>
+  </div>
+
+  <script>
+    // Plotline web SDK - init with the same API key + user as the Flutter app
+    plotline('init', '__PLOTLINE_API_KEY__', 'sindu_test');
+    plotline('identify', { name: 'Sindu', plan: 'free', city: 'Bengaluru' });
+
+    // Sample SEM events
+    plotline('track', 'web_page_viewed', { page: 'sample' });
+
+    let c = 0;
+    function inc() {
+      c++;
+      document.getElementById('count').textContent = c;
+      plotline('track', 'web_button_clicked', { count: c });
+    }
+  </script>
+</body>
+</html>

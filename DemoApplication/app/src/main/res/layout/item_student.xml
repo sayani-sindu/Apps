@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This XML is NOT a full screen. It's just one list row.
+  The RecyclerView Adapter inflates (creates) this layout for each student.
+
+  background="@android:color/white" + elevation = card-like appearance.
+  clickable="true" + focusable="true" — required to show ripple effect on touch.
+  foreground="?attr/selectableItemBackground" — adds the ripple animation on click.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@android:color/white"
+    android:elevation="2dp"
+    android:padding="16dp"
+    android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <!--
+      The circular avatar showing the student's initial.
+      We'll set the text and background color from Java.
+      gravity="center" — centers the initial letter inside this view.
+    -->
+    <TextView
+        android:id="@+id/textAvatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="#6200EE"
+        android:layout_marginEnd="16dp" />
+
+    <!--
+      A nested vertical LinearLayout to hold the name and course stacked vertically.
+      layout_weight="1" — takes all remaining horizontal space.
+      This pushes the avatar left and text right.
+    -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <!--
+          Student name — shown in bold.
+        -->
+        <TextView
+            android:id="@+id/textStudentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#212121" />
+
+        <!--
+          Student course — shown in gray below the name.
+        -->
+        <TextView
+            android:id="@+id/textStudentCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:layout_marginTop="2dp" />
+
+    </LinearLayout>
+
+    <!--
+      Age shown on the right side.
+    -->
+    <TextView
+        android:id="@+id/textStudentAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="21"
+        android:textSize="14sp"
+        android:textColor="#757575" />
+
+</LinearLayout>

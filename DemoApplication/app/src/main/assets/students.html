@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Students</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          background: #f5f7fa;
+          color: #1a1f2e;
+          padding: 16px;
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .header h1 { font-size: 22px; font-weight: 700; }
+        .header-actions { display: flex; gap: 8px; }
+        .icon-btn {
+          width: 40px; height: 40px; border-radius: 12px;
+          background: #fff; border: none; font-size: 18px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        /* Plotline widget placeholder — SDK renders here when a widget campaign is live */
+        #plotline_streak_widget { min-height: 0; margin-bottom: 16px; }
+
+        .search-bar {
+          width: 100%; padding: 12px 16px; border-radius: 12px;
+          border: 1px solid #e1e5eb; background: #fff; font-size: 14px; margin-bottom: 20px;
+        }
+        .section-title {
+          font-size: 12px; font-weight: 600; color: #6b7280;
+          text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;
+        }
+        .student-card {
+          background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px;
+          display: flex; align-items: center; gap: 12px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .avatar {
+          width: 48px; height: 48px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          color: #fff; font-weight: 600; font-size: 16px;
+        }
+        .student-info { flex: 1; }
+        .student-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .student-meta { font-size: 13px; color: #6b7280; }
+        .badge {
+          background: #eef2ff; color: #4f46e5;
+          padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 600;
+        }
+        .cta-primary {
+          width: 100%; padding: 14px; background: #4f46e5; color: #fff;
+          border: none; border-radius: 12px; font-size: 15px; font-weight: 600; margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Every element you want to tag with a tooltip/spotlight needs an `id`. -->
+<div class="header">
+    <h1 id="page_title_students">My Students</h1>
+    <div class="header-actions">
+        <button class="icon-btn" id="btn_notifications">🔔</button>
+        <button class="icon-btn" id="btn_profile">👤</button>
+    </div>
+</div>
+
+<!-- Plotline WIDGET placeholder: SDK renders into this div when a widget campaign runs -->
+<div id="plotline_streak_widget"></div>
+
+<input
+        type="text"
+        class="search-bar"
+        id="search_students"
+        placeholder="Search students..."
+        oninput="onSearchInput(this.value)" />
+
+<div class="section-title">Class 10-A · 4 students</div>
+
+<div class="student-card" id="student_card_1" onclick="openStudent('S001','Aditi Sharma')">
+    <div class="avatar" style="background:#ef4444">AS</div>
+    <div class="student-info">
+        <div class="student-name">Aditi Sharma</div>
+        <div class="student-meta">3 courses · 92% attendance</div>
+    </div>
+    <span class="badge">Top</span>
+</div>
+
+<div class="student-card" id="student_card_2" onclick="openStudent('S002','Rahul Verma')">
+    <div class="avatar" style="background:#3b82f6">RV</div>
+    <div class="student-info">
+        <div class="student-name">Rahul Verma</div>
+        <div class="student-meta">5 courses · 87% attendance</div>
+    </div>
+    <span class="badge">Active</span>
+</div>
+
+<div class="student-card" id="student_card_3" onclick="openStudent('S003','Priya Patel')">
+    <div class="avatar" style="background:#10b981">PP</div>
+    <div class="student-info">
+        <div class="student-name">Priya Patel</div>
+        <div class="student-meta">4 courses · 95% attendance</div>
+    </div>
+    <span class="badge">Top</span>
+</div>
+
+<div id="native2" data-plotline-widget="true"></div>
+
+<div class="student-card" id="student_card_4" onclick="openStudent('S004','Karan Singh')">
+    <div class="avatar" style="background:#f59e0b">KS</div>
+    <div class="student-info">
+        <div class="student-name">Karan Singh</div>
+        <div class="student-meta">2 courses · 78% attendance</div>
+    </div>
+    <span class="badge">New</span>
+</div>
+
+<button class="cta-primary" id="btn_add_student" onclick="addStudent()">
+    + Add New Student
+</button>
+
+<script>
+    /* --------------------------------------------------------
+       Plotline ↔ Native bridge helpers
+       -------------------------------------------------------- */
+    const trackEventOnPlotline = (eventName, properties) => {
+      properties = properties || {};
+      if ("PlotlineNative" in window) {
+        window.PlotlineNative.track(eventName, JSON.stringify(properties));   // Android
+      } else if (window.webkit?.messageHandlers?.Plotline) {
+        window.webkit.messageHandlers.Plotline.postMessage({                  // iOS (harmless if unused)
+          type: "track", eventName, properties: JSON.stringify(properties)
+        });
+      } else {
+        console.log("[Plotline mock] track", eventName, properties);
+      }
+    };
+
+    const identifyUserOnPlotline = (attributes) => {
+      if ("PlotlineNative" in window) {
+        window.PlotlineNative.identify(JSON.stringify(attributes));
+      } else if (window.webkit?.messageHandlers?.Plotline) {
+        window.webkit.messageHandlers.Plotline.postMessage({
+          type: "identify", attributes: JSON.stringify(attributes)
+        });
+      } else {
+        console.log("[Plotline mock] identify", attributes);
+      }
+    };
+
+    /* --------------------------------------------------------
+       Page events — every user action fires into Plotline
+       -------------------------------------------------------- */
+    window.addEventListener("load", () => {
+      trackEventOnPlotline("students_screen_viewed", { source: "webview" });
+      identifyUserOnPlotline({ last_viewed: "students_list", role: "teacher" });
+    });
+
+    function openStudent(studentId, studentName) {
+      trackEventOnPlotline("student_card_clicked", { student_id: studentId, student_name: studentName });
+      window.location.href = "course.html?student=" + encodeURIComponent(studentId);
+    }
+
+    function addStudent() {
+      trackEventOnPlotline("button_clicked", {});
+      alert("Add student flow");
+    }
+
+    let searchTimer;
+    function onSearchInput(query) {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        trackEventOnPlotline("students_search", { query, length: query.length });
+      }, 400);
+    }
+
+    /* --------------------------------------------------------
+       Native → WebView listener
+       Android calls: webView.evaluateJavascript("onPlotlineEvent('name', '{...}')", null)
+       -------------------------------------------------------- */
+    window.onPlotlineEvent = function (eventName, payloadJson) {
+      try {
+        const payload = payloadJson ? JSON.parse(payloadJson) : {};
+        console.log("Native → WebView event:", eventName, payload);
+
+        if (eventName === "widget_dismissed") {
+          const el = document.getElementById("plotline_streak_widget");
+          if (el) el.style.display = "none";
+        }
+      } catch (e) { console.error(e); }
+    };
+</script>
+</body>
+</html>

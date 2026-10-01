@@ -1,0 +1,9 @@
+<resources>
+    <!-- All text that appears in the app should ideally be here.
+         This makes it easy to:
+         - Translate the app to other languages
+         - Change text in one place
+         @string/app_name in XML → resolves to "Student App"
+    -->
+    <string name="app_name">Student App</string>
+</resources>

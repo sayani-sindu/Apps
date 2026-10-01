@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FrameLayout: The simplest container. Children stack on top of each other.
+  Good for holding a single full-screen child like RecyclerView.
+-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+      RecyclerView: A scrollable list that reuses ("recycles") its row views.
+      Imagine 1000 students. RecyclerView only creates ~10 visible row layouts
+      and reuses them as you scroll. Much more efficient than creating 1000 views.
+
+      The RecyclerView itself is an empty container. It needs:
+      1. An Adapter (tells it what data to show)
+      2. A LayoutManager (tells it how to arrange items — vertical list, grid, etc.)
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewStudents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:clipToPadding="false" />
+
+    <!--
+      This TextView is shown when the list is empty.
+      visibility="gone" means hidden by default.
+      Java code will make it visible when there are no students.
+      "gone" = completely removed from layout (takes no space).
+      "invisible" = hidden but still takes up space.
+      "visible" = shown normally.
+    -->
+    <TextView
+        android:id="@+id/textEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="No students yet.\nTap Dashboard to add one."
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#757575"
+        android:visibility="gone" />
+
+</FrameLayout>

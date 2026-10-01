@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This file defines what tabs appear in the BottomNavigationView.
+  Each <item> is one tab.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      android:id="@+id/nav_dashboard" — this ID is used in Java to know which tab was tapped.
+      android:icon — the icon shown. @android:drawable/ic_menu_compass is a built-in Android icon.
+      android:title — the label shown below the icon.
+    -->
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="Dashboard" />
+
+    <item
+        android:id="@+id/nav_students"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Students" />
+
+</menu>

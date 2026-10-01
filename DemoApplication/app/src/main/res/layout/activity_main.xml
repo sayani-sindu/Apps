@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  CoordinatorLayout: A smart container from the Material library.
+  It allows views inside it to "react" to each other (like a FAB that
+  moves up when a Snackbar appears). You can use FrameLayout here too,
+  but CoordinatorLayout is the standard for screens with Toolbar + content.
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--
+      AppBarLayout: A vertical container that wraps the Toolbar.
+      It enables scrolling behavior — the toolbar can hide when you scroll.
+      Without this, the Toolbar won't sit correctly at the top.
+    -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <!--
+          Toolbar: The top bar of the screen (shows the title, back button, menu icons).
+          This replaces the old ActionBar system.
+          android:id="@+id/toolbar" — gives it the name "toolbar" so Java can find it.
+          ?attr/colorPrimary — uses the primary color from your theme.
+          colorOnPrimary — text/icon color that's readable on the primary color.
+        -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:titleTextColor="?attr/colorOnPrimary"
+            android:title="Student App" />
+
+        <so.plotline.insights.PlotlineWidget
+            android:id="@+id/native5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <so.plotline.insights.PlotlineWidget
+            android:id="@+id/native4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!--
+      This LinearLayout holds the ViewPager + BottomNavigationView stacked vertically.
+      orientation="vertical" means children go top to bottom.
+      app:layout_behavior tells CoordinatorLayout to push this below the AppBar.
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+
+
+        <!--
+          ViewPager2: The swipeable area where Fragments are shown.
+          Think of it as an empty frame. The Adapter fills it with Fragments.
+          layout_weight="1" means "take all remaining space" — pushes BottomNav to the bottom.
+          layout_height="0dp" is intentional with layout_weight: 0dp says
+          "I'll get my height from weight, not from a fixed value."
+        -->
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+
+        <!--
+          BottomNavigationView: The tab bar at the bottom.
+          app:menu="@menu/bottom_nav_menu" links to the menu file that defines the tabs.
+          This is a Material Design component — needs the Material library in Gradle.
+        -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground"
+            app:menu="@menu/bottom_nav_menu" />
+
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

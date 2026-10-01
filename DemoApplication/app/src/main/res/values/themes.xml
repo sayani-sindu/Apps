@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base theme for the app. -->
+    <!-- Theme.MaterialComponents.DayNight.DarkActionBar:
+         - Material design styling
+         - DayNight = supports dark mode automatically
+         - DarkActionBar = dark toolbar with light text
+         We use NoActionBar variant to use our own Toolbar instead of the default one.
+    -->
+    <style name="Theme.DemoApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary color — used by buttons, Toolbar background, etc. -->
+        <item name="colorPrimary">#6200EE</item>
+        <!-- Dark variant of primary — used for status bar -->
+        <item name="colorPrimaryDark">#3700B3</item>
+        <!-- Secondary color — used for FABs, switches, etc. -->
+        <item name="colorAccent">#03DAC5</item>
+        <!-- Text/icon color on top of primary — must be readable on primary background -->
+        <item name="colorOnPrimary">#FFFFFF</item>
+    </style>
+</resources>

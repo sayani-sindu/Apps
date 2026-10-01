@@ -1,0 +1,15 @@
+{
+  "originHash" : "fdc0a5106073d51152159e1edd24c3df61bf914f6135400ddb85f12a8bee7fd3",
+  "pins" : [
+    {
+      "identity" : "plotline-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/plotline-insights/plotline-ios",
+      "state" : {
+        "revision" : "929e94897bd8d0970e1c64c524bec2a1d7269ce9",
+        "version" : "5.1.6"
+      }
+    }
+  ],
+  "version" : 3
+}

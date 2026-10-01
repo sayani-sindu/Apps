@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ScrollView: Makes the content scrollable if it's taller than the screen.
+  A screen with many elements needs this or content will be cut off.
+  ScrollView can only have ONE direct child (here it's the LinearLayout).
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!--
+      LinearLayout: Places children in a line.
+      orientation="vertical" = children stack top to bottom.
+      padding="16dp" = space between the edges and the children inside.
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!--
+          TextView: Shows text. This is a "heading" styled one.
+          textSize="24sp" — sp = scale-independent pixels. Use sp for text, dp for everything else.
+          sp respects the user's accessibility font size settings. dp does not.
+          textStyle="bold" — makes it bold.
+          layout_marginBottom="8dp" — 8dp space below this view.
+        -->
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to Student App"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_marginBottom="8dp" />
+
+
+        <!--
+          Another TextView — a subtitle.
+          textColor="#757575" — a gray color.
+          layout_marginBottom="24dp" — more space before the next section.
+        -->
+        <TextView
+            android:id="@+id/textSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage your students easily"
+            android:textSize="16sp"
+            android:textColor="#757575"
+            android:layout_marginBottom="24dp" />
+
+        <!--
+          CardView-style container using a plain LinearLayout with a white background.
+          elevation="4dp" — creates a shadow below the view (Material Design).
+          background="@android:color/white" — white card.
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quick Actions"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_marginBottom="12dp" />
+
+            <!--
+              Button: A clickable button.
+              android:id="@+id/btnAddStudent" — Java uses this ID to attach a click listener.
+              android:text="+ Add New Student" — label on the button.
+              layout_marginBottom="8dp" — space between buttons.
+              Without android:id, your Java code cannot find this button. It will crash.
+            -->
+            <Button
+                android:id="@+id/btnAddStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+ Add New Student"
+                android:layout_marginBottom="8dp" />
+
+            <!--
+              A second button — shows a dialog.
+            -->
+            <Button
+                android:id="@+id/btnShowDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Info Dialog"
+                android:layout_marginBottom="8dp" />
+
+            <!--
+              A button that shows a Toast message.
+            -->
+            <Button
+                android:id="@+id/btnShowToast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show Toast Message" />
+            <Button
+                android:id="@+id/btnOpenStudentsWeb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Open Students (WebView)"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/btnOpenCourseWeb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Open Course (WebView)"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!--
+          Stats section card
+        -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="App Info"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:layout_marginBottom="12dp" />
+
+            <!--
+              This TextView will be updated from Java code.
+              We give it a default text, but Java will change it at runtime.
+            -->
+            <TextView
+                android:id="@+id/textStudentCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Students: 0"
+                android:textSize="16sp"
+                android:textColor="#424242"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Version: 1.0"
+                android:textSize="16sp"
+                android:textColor="#424242" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

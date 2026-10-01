@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Toolbar with a back button -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"
+        android:title="Add Student" />
+
+    <!--
+      ScrollView wraps the form so it scrolls if keyboard pushes views up.
+    -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!--
+              TextInputLayout + TextInputEditText: Material-styled text input.
+              TextInputLayout is the CONTAINER that draws the floating label and underline.
+              TextInputEditText is the actual INPUT FIELD inside it.
+
+              Without TextInputLayout: You'd use a plain EditText. It works but looks basic.
+              With TextInputLayout: You get the floating label animation and error display.
+
+              hint="Student Name" — the label shown inside (floats up when user types).
+            -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Student Name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="16dp">
+
+                <!--
+                  TextInputEditText: The actual text field the user types into.
+                  android:id="@+id/editName" — Java reads the text from this view.
+                  inputType="textPersonName" — tells Android what keyboard to show.
+                  imeOptions="actionNext" — the keyboard's Enter key says "Next"
+                  and moves focus to the next field.
+                  Without android:id: Java cannot read what the user typed.
+                -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:imeOptions="actionNext" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Age input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Age"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="16dp">
+
+                <!--
+                  inputType="number" — shows a number keyboard.
+                  WHAT IF REMOVED: A full QWERTY keyboard opens for an age field. Bad UX.
+                -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:imeOptions="actionNext" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Course input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Course"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginBottom="24dp">
+
+                <!--
+                  imeOptions="actionDone" — keyboard Enter key says "Done" and closes keyboard.
+                  Good for the last field in a form.
+                -->
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:imeOptions="actionDone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Submit button -->
+
+            <Button
+                android:id="@+id/btnSaveStudent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Student"
+                android:padding="16dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
