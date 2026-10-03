@@ -1,14 +1,13 @@
 # RNPlotlineSample
 
-A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) demonstrating the **Plotline** SDK via the `plotline-engage` npm package.
+A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) for testing purposes.
 
 ## Features
 
 - E-commerce style demo: Home, Products, Product Detail, Cart, Profile
-- Web tab: local HTML store page in a `WebView` (Plotline web SDK + JS bridge)
+- Web tab: local HTML store page in a `WebView` with a JS bridge
 - Bridge tab: bidirectional RN ↔ WebView messaging
-- Plotline SDK: `init`, `track`, `identify`, redirects, events, and push
-- Firebase Cloud Messaging on Android (push tokens)
+- Push notifications on Android
 
 ## Setup
 
@@ -16,7 +15,7 @@ A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) 
    ```bash
    npm install
    ```
-2. Copy `.env.example` to `.env` and set your real Plotline API key:
+2. Copy `.env.example` to `.env` and set your API key:
    ```bash
    cp .env.example .env
    # PLOTLINE_API_KEY=your_plotline_api_key_here
@@ -32,12 +31,12 @@ A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) 
    npm run ios
    ```
 
-The key is loaded via `react-native-dotenv` from `@env` and used by both the native SDK (`App.tsx`) and the WebView store page (`src/screens/web/shopHtml.js`).
+The key is loaded via `react-native-dotenv` from `@env` and used by the app (`App.tsx`) and the WebView store page (`src/screens/web/shopHtml.js`).
 
 ## Project structure
 
 ```
-App.tsx                    # navigation (tabs + stack) + Plotline init
+App.tsx                    # navigation (tabs + stack) + app init
 src/data/products.ts        # sample data
 src/screens/                # screens incl. WebView + Bridge
 src/screens/web/            # shopHtml.js (web store, key from @env)

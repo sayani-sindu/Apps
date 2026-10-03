@@ -1,13 +1,13 @@
 # Apps
 
-A collection of demo applications, each showcasing the [Plotline](https://www.plotline.so/) engagement SDK across different mobile platforms and frameworks.
+A collection of mobile sample apps for testing purposes, covering different platforms and frameworks.
 
 | App | Platform | Framework | Description |
 |-----|----------|-----------|-------------|
-| [DemoApplication](./DemoApplication) | Android | Java | Student-management demo (CRUD + dashboard) with Plotline SDK, Firebase Cloud Messaging and WebView integration. |
-| [HabitTracker](./HabitTracker) | iOS | SwiftUI | Habit-tracking app with Plotline push notifications, a notification service extension and a content extension. |
-| [RNPlotlineSample](./RNPlotlineSample) | Android & iOS | React Native | E-commerce style demo (Home, Products, Cart, Profile, Web, Bridge) using the `plotline-engage` npm SDK. |
-| [sample_app](./sample_app) | Android & iOS | Flutter | Multi-screen demo (Home, Feed, Details, Profile, Settings, WebView) using the `plotline_engage` Flutter package and Firebase. |
+| [DemoApplication](./DemoApplication) | Android | Java | Student-management demo (CRUD + dashboard) with push notifications and WebView integration. |
+| [HabitTracker](./HabitTracker) | iOS | SwiftUI | Habit-tracking app with a notification service extension and a notification content extension. |
+| [RNPlotlineSample](./RNPlotlineSample) | Android & iOS | React Native | E-commerce style demo (Home, Products, Cart, Profile, Web, Bridge). |
+| [sample_app](./sample_app) | Android & iOS | Flutter | Multi-screen demo (Home, Feed, Details, Profile, Settings, WebView). |
 
 ## Requirements
 
@@ -18,10 +18,10 @@ A collection of demo applications, each showcasing the [Plotline](https://www.pl
 
 ## Setup
 
-Each app keeps its secrets in a local `.env` file which is **git-ignored**. To run an app:
+Each app keeps its configuration keys in a local `.env` file which is **git-ignored**. To run an app:
 
 1. Copy `.env.example` to `.env` inside the app folder.
-2. Fill in your real **Plotline API key** (from the Plotline dashboard).
+2. Fill in the required API keys.
 3. Build & run with the app's standard tooling.
 
 See each app's `README.md` for details.

@@ -1,18 +1,17 @@
 # DemoApplication
 
-A native **Android** app (Java) demonstrating **Plotline** engagement + Firebase Cloud Messaging.
+A native **Android** app (Java) for testing purposes — a student-management demo with push notifications and WebView integration.
 
 ## Features
 
 - Bottom navigation (Dashboard / Students) using `ViewPager2`
 - Student management demo: list, detail, add — with a live student count
-- Plotline SDK: `init`, `track`, `identify`, story widgets, in-app nudges and push (`PlotlinePush`)
-- Firebase Cloud Messaging (push tokens)
-- Local WebView pages (`students.html`, `courses.html`) that embed the Plotline web SDK
+- Push notifications
+- Local WebView pages (`students.html`, `courses.html`)
 
 ## Setup
 
-1. Set your Plotline API key as an OS environment variable so it never lives in a file:
+1. Set your API key as an OS environment variable so it never lives in a file:
    ```bash
    export PLOTLINE_API_KEY=your_plotline_api_key_here
    ```
@@ -28,7 +27,7 @@ Gradle reads the key from the `PLOTLINE_API_KEY` environment variable and expose
 
 ```
 app/src/main/java/com/example/demoapplication/
-  MainActivity.java        # Plotline init, push, redirects
+  MainActivity.java        # app entry, push setup
   WebActivity.java         # loads local HTML pages with injected API key
   fragments/               # Dashboard + Student screens
   adapters/                # ViewPager adapter

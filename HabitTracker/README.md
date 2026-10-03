@@ -1,19 +1,18 @@
 # HabitTracker
 
-An **iOS** app (SwiftUI) demonstrating **Plotline** push notifications and engagement with two app extensions.
+An **iOS** app (SwiftUI) for testing purposes — a habit-tracking app with rich push notifications and two app extensions.
 
 ## Features
 
 - Habit tracking: Home, Add Habit, Habit Detail, Settings, Onboarding, Main Tab view
 - In-memory `HabitStore` + `Habit` model (no backend)
-- Plotline SDK: analytics, `identify`, redirects, and rich push notifications
 - `HabitTrackerNotificationService` — notification service extension
 - `HabitTrackerContentService` — notification content extension
 - Swift Package Manager (no CocoaPods)
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and set your real Plotline API key:
+1. Copy `.env.example` to `.env` and set your API key:
    ```bash
    cp .env.example .env
    # PLOTLINE_API_KEY=your_plotline_api_key_here
@@ -28,7 +27,7 @@ The `.env` file is read at build time by a "Generate Secrets from .env" build ph
 ```
 HabitTracker/
   HabitTrackerApp.swift   # app entry point
-  AppDelegate.swift       # Plotline init + push handling
+  AppDelegate.swift       # push setup
   Models/                 # Habit model
   Store/                  # HabitStore (in-memory)
   Views/                  # SwiftUI screens
