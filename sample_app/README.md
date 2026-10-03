@@ -1,6 +1,6 @@
 # sample_app
 
-A **Flutter** app for testing purposes — a multi-screen demo with push notifications.
+A **Flutter** app used to **integration-test the Plotline SDK** — verifying Plotline works correctly in a Flutter app (events, push notifications, in-app WebView).
 
 ## Features
 

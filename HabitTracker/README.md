@@ -1,6 +1,6 @@
 # HabitTracker
 
-An **iOS** app (SwiftUI) for testing purposes — a habit-tracking app with rich push notifications and two app extensions.
+An **iOS** app (SwiftUI) used to **integration-test the Plotline SDK** — verifying Plotline works correctly in an iOS app (push notifications, rich notification extensions, deep links).
 
 ## Features
 

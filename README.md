@@ -1,6 +1,6 @@
 # Apps
 
-A collection of mobile sample apps for testing purposes, covering different platforms and frameworks.
+A collection of mobile sample apps used to **integration-test the Plotline SDK** — verifying that Plotline works correctly inside Android, iOS, React Native and Flutter apps. Each app covers a different platform and framework.
 
 | App | Platform | Framework | Description |
 |-----|----------|-----------|-------------|
@@ -21,7 +21,7 @@ A collection of mobile sample apps for testing purposes, covering different plat
 Each app keeps its configuration keys in a local `.env` file which is **git-ignored**. To run an app:
 
 1. Copy `.env.example` to `.env` inside the app folder.
-2. Fill in the required API keys.
+2. Fill in the required API keys (e.g. the Plotline API key).
 3. Build & run with the app's standard tooling.
 
 See each app's `README.md` for details.

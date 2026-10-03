@@ -1,6 +1,6 @@
 # DemoApplication
 
-A native **Android** app (Java) for testing purposes — a student-management demo with push notifications and WebView integration.
+A native **Android** app (Java) used to **integration-test the Plotline SDK** — verifying Plotline works correctly in an Android app (push notifications, in-app widgets, WebView integration).
 
 ## Features
 

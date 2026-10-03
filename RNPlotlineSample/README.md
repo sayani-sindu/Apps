@@ -1,6 +1,6 @@
 # RNPlotlineSample
 
-A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) for testing purposes.
+A **React Native 0.76.5** app (New Architecture enabled: Fabric + TurboModules) used to **integration-test the Plotline SDK** — verifying Plotline works correctly in a React Native app (events, push, WebView bridge).
 
 ## Features
 
