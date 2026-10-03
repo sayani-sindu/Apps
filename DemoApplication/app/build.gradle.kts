@@ -6,6 +6,8 @@ plugins {
 }
 
 fun env(name: String): String {
+    System.getenv(name)?.takeIf { it.isNotBlank() }?.let { return it }
+
     val envFile = File(projectDir.parentFile, ".env")
     if (envFile.exists()) {
         envFile.readLines().forEach { line ->

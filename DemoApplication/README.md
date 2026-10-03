@@ -12,15 +12,15 @@ A native **Android** app (Java) demonstrating **Plotline** engagement + Firebase
 
 ## Setup
 
-1. Copy `.env.example` to `.env` and set your real Plotline API key:
+1. Set your Plotline API key as an OS environment variable so it never lives in a file:
    ```bash
-   cp .env.example .env
-   # PLOTLINE_API_KEY=your_plotline_api_key_here
+   export PLOTLINE_API_KEY=your_plotline_api_key_here
    ```
+   (Legacy fallback: you may also place it in the gitignored `.env` file, but the env var is preferred.)
 2. Open the project in Android Studio (or `./gradlew assembleDebug`).
 3. Build & run.
 
-The `.env` file is read by Gradle at build time and exposed to the app via `BuildConfig.PLOTLINE_API_KEY`. The WebView pages inject the key from `BuildConfig` at runtime.
+Gradle reads the key from the `PLOTLINE_API_KEY` environment variable and exposes it to the app via `BuildConfig.PLOTLINE_API_KEY`. The WebView pages inject the key from `BuildConfig` at runtime.
 
 > `app/google-services.json` is committed intentionally — Firebase API keys are public identifiers, not secrets.
 

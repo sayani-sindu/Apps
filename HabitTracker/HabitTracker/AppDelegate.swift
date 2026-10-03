@@ -20,7 +20,7 @@ class AppDelegate: NSObject,
 
         Plotline.initialize(
             apiKey: Secrets.plotlineApiKey,
-            userId: "demo-app"
+            userId: "sindu_test1"
         )
 
         PlotlinePush.enablePush(self)
